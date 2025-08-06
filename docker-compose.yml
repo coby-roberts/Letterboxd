@@ -7,3 +7,12 @@ services:
       POSTGRES_DB: letterboxd-postgres-docker
     ports:
       - "5432:5432"
+  frontend:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - /frontend:/app
+      - /app/node_modules
+    command: npm run dev
+    ports: 
+      - "5173:5173"
