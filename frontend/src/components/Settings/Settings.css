@@ -1,0 +1,29 @@
+.settings {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid black;
+    width: 500px;
+    height: auto;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+ 
+}
+
+.form-row label {
+    width: 90px;
+    text-align: right;
+    padding-right: 8px;
+}
+
+.form-row input {
+    border: none;
+}
+
+.form-row input:hover {
+    border: none;
+}

@@ -1,0 +1,50 @@
+#search-results {
+    color: green;
+    border: 2px solid black;
+
+    position: fixed;
+    left: 15%;
+    top: 15%;
+    width: 30%;
+    min-width: 350px;
+    max-height: 60%;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.film {
+    display: flex;
+}
+
+.film p {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+
+.film .title {
+    font-size: 18px;
+}
+.film .date {
+    font-size: 12px;
+}
+
+.film:hover {
+  background-color: #f0f0f0;
+  border: none;
+}
+
+.selected {
+  background-color: lightgrey;
+}
+
+#movie-display {
+    border: 2px solid black;
+    position: fixed;
+    right: 15%;
+    top: 15%;
+    width: 30%;
+    min-width: 350px;
+    overflow: hidden;
+}

@@ -1,0 +1,23 @@
+.padded {
+    padding-bottom: 4px;
+    padding-top: 2px;
+}
+
+.history-line {
+    margin: 0;
+    font-size: 14px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.history .username {
+    padding: 0px 8px;
+}
+
+.history .loggedIn {
+    color: green;
+
+}
+.history .loggedOut {
+    color: red;
+}

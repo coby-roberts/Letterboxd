@@ -1,0 +1,41 @@
+.carousel {
+  border: 2px solid hsl(0, 0%, 0%);
+  margin: 5px;
+  padding: 5px;
+}
+
+.carousel-heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.carousel-heading h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.carousel-heading button {
+  background: none;
+  border: none;
+  padding: 2px 8px;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.posters {
+  display: flex;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.poster {
+  margin-right: 6px;
+}
+
+.poster img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

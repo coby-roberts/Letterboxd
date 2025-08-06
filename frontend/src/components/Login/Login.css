@@ -1,0 +1,37 @@
+.login-form {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30vw;
+    border: 2px solid #000;
+    border-radius: 8px;
+    padding: 4px;
+    background-color: white;
+}
+
+.form-div {
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+.form-div label {
+    display: inline-block;
+    padding: 0 8px;
+    font-size: 14px;
+    color: black;
+    font-weight: bolder;
+}
+
+.form-div input {
+    width: 80%;
+    background-color: transparent;
+    border: none;
+
+    display: inline-block;
+}
+
+.login-form input:focus {
+  outline: none;
+}
