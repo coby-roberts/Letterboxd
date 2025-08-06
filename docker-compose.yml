@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: ./api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: dbc:postgresql://db:5432/devdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password22
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password22
+      POSTGRES_DB: letterboxd-postgres-docker
+    ports:
+      - "5432:5432"
