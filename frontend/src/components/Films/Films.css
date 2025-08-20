@@ -1,15 +1,18 @@
+.Films {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    height: calc(100vh - 190px); /* adjust 120px = search bar + margins */
+}
+
 #search-results {
     color: green;
     border: 2px solid black;
-
-    position: fixed;
-    left: 15%;
-    top: 15%;
-    width: 30%;
-    min-width: 350px;
-    max-height: 60%;
+    background: black;
+    margin: 10px;
     overflow: hidden;
-    padding: 5px;
+    padding: 10px;
+    overflow-y: auto;
 }
 
 .film {
@@ -22,7 +25,6 @@
     font-weight: bold;
 }
 
-
 .film .title {
     font-size: 18px;
 }
@@ -31,20 +33,13 @@
 }
 
 .film:hover {
-  background-color: #f0f0f0;
+  background-color: green;
+  color: black;
   border: none;
 }
 
 .selected {
-  background-color: lightgrey;
+  background-color: green;
+  color: black;
 }
 
-#movie-display {
-    border: 2px solid black;
-    position: fixed;
-    right: 15%;
-    top: 15%;
-    width: 30%;
-    min-width: 350px;
-    overflow: hidden;
-}

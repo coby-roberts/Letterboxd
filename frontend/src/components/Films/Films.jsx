@@ -1,8 +1,8 @@
 import "./Films.css";
+import TmdbMovieCard from "../TmdbMovieCard/TmdbMovieCard";
+import { useEffect, useState, useRef } from "react";
 
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
-
-import { useEffect, useState, useRef } from "react";
 
 function Films({ searchQuery }) {
   const [searchResult, setSearchResult] = useState(null);
@@ -55,7 +55,7 @@ function Films({ searchQuery }) {
   };
 
   return (
-    <>
+    <div className="Films">
       <div id="search-results">
         {searchResult ? (
           searchResult.map((item, i) => (
@@ -65,9 +65,10 @@ function Films({ searchQuery }) {
               tabIndex={0}
               className={i === selectedIndex ? "film selected" : "film"}
               onClick={() => setSelectedIndex(i)}
+              onMouseEnter={() => setSelectedIndex(i)} 
               onKeyDown={handleKeyDown}
             >
-              <p className="title">{item.title} <span className="date">{item.release_date}</span>
+              <p className="title"><span className="date">{item.release_date} {item.title}</span>
                 </p>
               
             </div>
@@ -78,8 +79,8 @@ function Films({ searchQuery }) {
           </div>
         )}
       </div>
-      <div id="movie-display"></div>
-    </>
+      <TmdbMovieCard movieId={searchResult?.[selectedIndex]?.id} />
+    </div>
   );
 }
 

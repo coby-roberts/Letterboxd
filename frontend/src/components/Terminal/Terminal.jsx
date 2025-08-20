@@ -3,6 +3,7 @@ import "./Terminal.css";
 import { useState } from "react";
 
 import SearchHistory from "../SearchHistory/SearchHistory";
+import HelpMenu from "../HelpMenu/HelpMenu";
 
 function Terminal({
   setActivePage,
@@ -74,16 +75,7 @@ function Terminal({
   };
 
   return (
-    <>{showHelp && (
-      <div className="help">
-        <p>This is the help Screen</p>
-        <p>dashboard</p>
-        <p>profile</p>
-        <p>login / logout</p>
-        <p>signup</p>
-        <p>films 'search-query'</p>
-      </div>
-    )}
+    <>{showHelp && <HelpMenu />}
       <div className="terminal">
         <SearchHistory history={history} username={username} />
         <div className="searchbar">

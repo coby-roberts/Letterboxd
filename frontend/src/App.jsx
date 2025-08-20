@@ -37,8 +37,8 @@ const [searchQuery, setSearchQuery] = useState(null);
     {/* Main screen */}
     {activePage === "dashboard" && <Dashboard loggedIn={loggedIn} />}
     {activePage === "films" && <Films searchQuery={searchQuery} />}
-    {activePage === "settings" && loggedIn && <Settings />}
-    {activePage === "me" && loggedIn && <Me />}
+    {activePage === "settings" && loggedIn && <Settings setUsername={setUsername} accountUsername={username}/>}
+    {activePage === "me" && loggedIn && <Me username={username} />}
 
 
     {/* Auth modals */}
