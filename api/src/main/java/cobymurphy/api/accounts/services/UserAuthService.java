@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserAuthService {
 
@@ -27,18 +29,17 @@ public class UserAuthService {
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public AuthResponse register(RegisterDto registerDto) {
 
-        Users user = new Users(registerDto.getUsername(), registerDto.getPassword(), registerDto.getEmail());
+    public Optional<AuthResponse> register(RegisterDto registerDto) {
 
-        if (repository.existsByUsername(user.getUsername())) {
-            throw new IllegalArgumentException("Username taken, contact Liam Neeson");
+        if (repository.existsByUsername(registerDto.getUsername())) {
+            return Optional.empty();
         }
 
-        user.setPassword(encoder.encode(user.getPassword()));
+        Users user = new Users(registerDto.getUsername(), encoder.encode(registerDto.getPassword()), registerDto.getEmail());
         repository.save(user);
 
-        return new AuthResponse(user.getUsername(), jwtService.generateToken(user.getUsername()));
+        return Optional.of(new AuthResponse(user.getUsername(), jwtService.generateToken(user.getUsername())));
     }
 
     public AuthResponse verify(LoginDto loginDto) {

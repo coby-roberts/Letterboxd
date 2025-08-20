@@ -2,9 +2,11 @@ package cobymurphy.api.accounts.services;
 
 import cobymurphy.api.accounts.dto.DiaryDto;
 import cobymurphy.api.accounts.dto.ProfileDto;
+import cobymurphy.api.accounts.exception.UsernameConflictException;
 import cobymurphy.api.accounts.model.DiaryEntry;
 import cobymurphy.api.accounts.repository.DiaryRepository;
 import cobymurphy.api.accounts.repository.WatchedRepository;
+import cobymurphy.api.accounts.response.UpdatedUsernameResponse;
 import cobymurphy.api.film.dto.FilmDto;
 import cobymurphy.api.accounts.dto.SettingsDto;
 import cobymurphy.api.accounts.model.Users;
@@ -13,11 +15,13 @@ import cobymurphy.api.film.repository.FilmRepository;
 import cobymurphy.api.accounts.repository.UserRepository;
 import cobymurphy.api.film.model.Film;
 import cobymurphy.api.jwt.service.JwtService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -122,4 +126,39 @@ public class UserService {
         addFilmIfDoesNotExist(film);
         return film;
     }
+
+    public SettingsDto patchAccount(String username, SettingsDto request) {
+       
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+
+        if (request.getBio() != null && !request.getBio().equals(user.getBio())) {
+            user.setBio(request.getBio());
+        }
+        if (request.getFamilyName() != null && !request.getFamilyName().equals(user.getFamilyName())) {
+            user.setFamilyName(request.getFamilyName());
+        }
+        if (request.getGivenName() != null && !request.getGivenName().equals(user.getGivenName())) {
+            user.setGivenName(request.getGivenName());
+        }
+        Users saved = userRepository.save(user); 
+
+        return saved.convertToSettingsDTO();
+    }
+
+    public UpdatedUsernameResponse changeUsername(String username, String newUsername) {
+
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username " + newUsername + " already taken."));
+
+        if (userRepository.existsByUsername(newUsername)) {
+            throw new UsernameConflictException("Username " + newUsername + " already taken.");
+        }
+
+        user.setUsername(newUsername);
+        Users saved = userRepository.save(user);
+
+        return new UpdatedUsernameResponse(newUsername);
+    }
+
 }

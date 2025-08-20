@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
+import java.util.List;
+import java.util.Optional;
+
+
 @RestController
 
 @RequestMapping("/account")
@@ -26,8 +30,13 @@ public class UserAuthController {
     }
 
     @PostMapping(value = "/signup", consumes ="application/json")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterDto registerDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.register(registerDto));
+    public ResponseEntity<?> register(@RequestBody RegisterDto registerDto){
+        Optional<AuthResponse> response = service.register(registerDto);
+        if (response.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
     @GetMapping("/whoami")
