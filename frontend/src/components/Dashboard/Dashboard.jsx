@@ -1,6 +1,6 @@
 import "./Dashboard.css";
-import Carousel from "./Carousel/Carousel";
-import Friends from "./Friends/Friends";
+import Carousel from "../Carousel/Carousel";
+import Friends from "../Friends/Friends";
 
 import { useEffect, useState } from "react";
 

@@ -1,45 +1,6 @@
 .Films {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    height: calc(100vh - 190px); /* adjust 120px = search bar + margins */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  height: calc(100vh - 210px);
 }
-
-#search-results {
-    color: green;
-    border: 2px solid black;
-    background: black;
-    margin: 10px;
-    overflow: hidden;
-    padding: 10px;
-    overflow-y: auto;
-}
-
-.film {
-    display: flex;
-}
-
-.film p {
-    margin: 0;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
-}
-
-.film .title {
-    font-size: 18px;
-}
-.film .date {
-    font-size: 12px;
-}
-
-.film:hover {
-  background-color: green;
-  color: black;
-  border: none;
-}
-
-.selected {
-  background-color: green;
-  color: black;
-}
-

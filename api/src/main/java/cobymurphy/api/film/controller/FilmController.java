@@ -16,5 +16,4 @@ public class FilmController {
     public ResponseEntity<FilmDto> find(@PathVariable String title) {
         return ResponseEntity.ok(filmService.findFilmByTitle(title));
     }
-
 }

@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 // Also called UserPrincipal
 public class CustomUserDetails implements UserDetails {
 
-    private Users user;
+    final private Users user;
 
     public CustomUserDetails(Users user) {
         this.user = user;

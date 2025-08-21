@@ -50,13 +50,13 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
-
     public ProfileDto getProfileByUsername(String username) {
         return userRepository.findByUsername(username)
                 .map(Users::convertToProfileDTO)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
+    // TODO: create a watchedDto to return instead of this.
     /**
      * @param username of the user whose films you want to retrieve
      * @return a list of the users watched films
@@ -65,6 +65,7 @@ public class UserService {
         return watchedRepository.findByUser_Username(username);
     }
 
+    // TODO: create a diaryDto to return instead of this.
     /**
      * @param username of the user whose films you want to retrieve
      * @return a list of the users watched films
