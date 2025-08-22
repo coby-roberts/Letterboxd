@@ -1,7 +1,6 @@
 import "./Me.css";
 import Profile from "../Profile/Profile";
 import Diary from "../Diary/Diary";
-import Films from "../Films/Films";
 
 //    <Profile /> // URL
 //     <Diary /> // GET URL${username}/diary POST URL/diary/${title}
@@ -15,7 +14,6 @@ function Me({ username }) {
       <h1>Me</h1>
       <Profile username={username}/>
       <Diary />
-      <Films />
     </>
   );
 }

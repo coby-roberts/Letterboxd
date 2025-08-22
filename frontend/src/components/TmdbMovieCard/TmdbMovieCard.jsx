@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 import "./TmdbMovieCard.css";
 
 import fallbackImg from "../../assets/1280x720.webp";
 
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
-function TmdbMovieCard({ movieId }) {
+const TmdbMovieCard = forwardRef(({ movieId }, ref) => {
   const [movieDetails, setMovieDetails] = useState(null);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function TmdbMovieCard({ movieId }) {
         Authorization: `Bearer ${TOKEN}`,
       },
     };
-
+  
     fetch(url, options)
       .then((res) => res.json())
       .then((json) => setMovieDetails(json))
@@ -29,8 +29,6 @@ function TmdbMovieCard({ movieId }) {
   if (!movieId) return <p>Select a movie.</p>;
   if (!movieDetails) return <p>Loading...</p>;
 
-
-
   const backdropUrl = movieDetails.backdrop_path
     ? `https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}`
     : fallbackImg;
@@ -39,6 +37,8 @@ function TmdbMovieCard({ movieId }) {
     <div
       className="TmdbMovieCard side-by-side"
       style={{ fontFamily: "monospace", color: "#9AE6B4" }}
+      tabIndex={0}
+      ref={ref}
     >
       {/* Backdrop */}
       <div style={{ position: "relative" }}>
@@ -242,6 +242,6 @@ function TmdbMovieCard({ movieId }) {
       </div>
     </div>
   );
-}
+});
 
 export default TmdbMovieCard;

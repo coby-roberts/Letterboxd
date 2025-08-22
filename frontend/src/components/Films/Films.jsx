@@ -9,6 +9,7 @@ function Films({ searchQuery }) {
   const [searchResult, setSearchResult] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const refs = useRef([]);
+  const movieCardRef = useRef(null);
 
   useEffect(() => {
     console.log("Search Query:", searchQuery);
@@ -18,7 +19,8 @@ function Films({ searchQuery }) {
     )}&include_adult=false&language=en-US&page=1`;
     const options = {
       method: "GET",
-      headers: { accept: "application/json", Authorization: `Bearer ${TOKEN}` },
+      headers: { accept: "application/json", 
+      Authorization: `Bearer ${TOKEN}` },
     };
 
     fetch(url, options)
@@ -39,20 +41,39 @@ function Films({ searchQuery }) {
     }
   }, [selectedIndex]);
 
+  useEffect(() => {
+    if (searchResult && searchResult.length > 0) {
+      setSelectedIndex(0);
+      setTimeout(() => {
+        if (refs.current[0]) {
+          refs.current[0].focus();        
+        }
+      }, 0);
+    }  
+  }, [searchResult])
+
   const selectedMovieId =
     searchResult && searchResult[selectedIndex]
       ? searchResult[selectedIndex].id
       : null;
 
+
+  const handleSearchEnter = () => {
+    if (movieCardRef.current) {
+      movieCardRef.current.focus();
+    }
+  }
+
   return (
     <div className="Films">
       <TmdbSearch
+        refs={refs}
         searchResult={searchResult}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-        refs={refs}
+        onEnter={handleSearchEnter}
       />
-      <TmdbMovieCard movieId={selectedMovieId}/>
+      <TmdbMovieCard ref={movieCardRef} movieId={selectedMovieId} />
     </div>
   );
 }

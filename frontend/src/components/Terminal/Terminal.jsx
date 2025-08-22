@@ -77,7 +77,7 @@ function Terminal({
   return (
     <>{showHelp && <HelpMenu />}
       <div className="terminal">
-        <SearchHistory history={history} username={username} />
+       {/*  <SearchHistory history={history} username={username} /> */}
         <div className="searchbar">
           <span id="searchbarusername">
             {username ? username : "anonymous"}

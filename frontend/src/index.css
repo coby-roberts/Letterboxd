@@ -18,7 +18,7 @@ body {
 .side-by-side {
   margin: 10px;
   border: 2px solid black;
-  height: 100%;
+  height: calc(100% - 20px);
 
   overflow-y: auto;
   flex-direction: column;

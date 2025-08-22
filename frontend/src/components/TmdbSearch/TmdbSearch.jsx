@@ -1,9 +1,12 @@
-import React from 'react';
 import './TmdbSearch.css';
 
-function TmdbSearch({ searchResult, selectedIndex, setSelectedIndex, refs }) {
+function TmdbSearch({ searchResult, selectedIndex, setSelectedIndex, refs, onEnter }) {
+
 
   const handleKeyDown = (e) => {
+
+    if (!searchResult || searchResult.length === 0) return;
+
     if (e.key === "ArrowDown") {
       setSelectedIndex((prev) => Math.min(prev + 1, searchResult.length - 1));
       e.preventDefault();
@@ -11,34 +14,32 @@ function TmdbSearch({ searchResult, selectedIndex, setSelectedIndex, refs }) {
       setSelectedIndex((prev) => Math.max(prev - 1, 0));
       e.preventDefault();
     } else if (e.key === "Enter") {
-      console.log("Selected:", searchResult[selectedIndex]);
+      e.preventDefault();
+      onEnter?.();
     }
   };
 
   return (
-      <div className="TmdbSearch side-by-side">
-        {searchResult ? (
+      <div
+        className="TmdbSearch side-by-side"              
+        tabIndex={0}
+        onKeyDown={handleKeyDown}>
+      <ul className="TmdbSearchResults">
+        {searchResult && searchResult.length > 0 ? (
           searchResult.map((item, i) => (
-            <div
+            <li
               key={item.id}
               ref={(el) => (refs.current[i] = el)}
-              tabIndex={0}
-              className={i === selectedIndex ? "film selected" : "film"}
+              tabIndex={-1}
+              className={i === selectedIndex ? "FilmListItem SelectedFilmListItem" : "FilmListitem"}
               onClick={() => setSelectedIndex(i)}
-              onKeyDown={handleKeyDown}
-            >
-              {" "}
-              <p className="title">
-                {item.title} <span className="date">{item.release_date}</span>{" "}
-              </p>{" "}
-            </div>
+            >{item.release_date} {item.title}</li>
           ))
         ) : (
-          <div>
-            {" "}
-            <p>No Results</p>{" "}
-          </div>
-        )}{" "}
+          <li>No Results
+          </li>
+          )}
+      </ul>
       </div>
   );
 }
