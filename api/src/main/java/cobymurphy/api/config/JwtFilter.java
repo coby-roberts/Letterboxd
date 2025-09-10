@@ -1,7 +1,7 @@
-package cobymurphy.api.jwt.config;
+package cobymurphy.api.config;
 
 import cobymurphy.api.accounts.services.CustomUserDetailsService;
-import cobymurphy.api.jwt.service.JwtService;
+import cobymurphy.api.accounts.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

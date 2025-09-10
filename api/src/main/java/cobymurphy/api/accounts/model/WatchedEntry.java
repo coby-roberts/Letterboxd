@@ -1,13 +1,12 @@
 package cobymurphy.api.accounts.model;
 
-import cobymurphy.api.film.model.Film;
+import cobymurphy.api.accounts.dto.WatchedDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
@@ -31,5 +30,14 @@ public class WatchedEntry {
         this.user = user;
         this.film = film;
         this.rating = rating;
+    }
+
+    public WatchedDto convertToDto() {
+        return new WatchedDto(
+                this.getWatched_id(),
+                this.getUser().getUsername(),
+                this.getFilm().getId(),
+                this.getRating()
+        );
     }
 }

@@ -1,6 +1,6 @@
 package cobymurphy.api.accounts.model;
 
-import cobymurphy.api.film.model.Film;
+import cobymurphy.api.accounts.dto.DiaryDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
@@ -33,5 +33,16 @@ public class DiaryEntry {
     private LocalDate watchDate;
     private int rating;
     private String review;
+
+    public DiaryDto convertToDto() {
+        return new DiaryDto(
+                this.getEntry_id(),
+                this.getUser().getUsername(),
+                this.getFilm().getId(),
+                this.getWatchDate(),
+                this.getRating(),
+                this.getReview()
+        );
+    }
 
 }

@@ -1,8 +1,8 @@
-package cobymurphy.api.film.service;
+package cobymurphy.api.accounts.services;
 
-import cobymurphy.api.film.dto.FilmDto;
-import cobymurphy.api.film.model.Film;
-import cobymurphy.api.film.repository.FilmDao;
+import cobymurphy.api.accounts.dto.FilmDto;
+import cobymurphy.api.accounts.model.Film;
+import cobymurphy.api.accounts.repository.FilmDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

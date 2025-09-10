@@ -26,6 +26,7 @@ A RESTful API for tracking users watched films, ratings, and discovering.
 - `PUT /settings/username` - Update Username
 
 ### Users & Watchlist
+- `GET /users/search` - Returns page of first 10 results sorted by ASC
 - `GET /users/{username}` - Gets User profile details
 - `GET /users/{username}/films` - Get all of a users watched films
 - `GET /users/{username}/diary` - Get all of a users diary entries

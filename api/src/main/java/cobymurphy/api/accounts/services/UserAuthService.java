@@ -5,7 +5,6 @@ import cobymurphy.api.accounts.dto.RegisterDto;
 import cobymurphy.api.accounts.model.Users;
 import cobymurphy.api.accounts.repository.UserDao;
 import cobymurphy.api.accounts.dto.AuthDto;
-import cobymurphy.api.jwt.service.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

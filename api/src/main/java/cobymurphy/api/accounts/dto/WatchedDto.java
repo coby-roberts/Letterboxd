@@ -10,7 +10,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class WatchedDto {
 
-    private long entry_id;
+    private long watched_id;
     private String username;
+    private long film_id;
     private int rating;
 }

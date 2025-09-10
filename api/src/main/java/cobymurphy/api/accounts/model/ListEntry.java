@@ -1,6 +1,5 @@
 package cobymurphy.api.accounts.model;
 
-import cobymurphy.api.film.model.Film;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;

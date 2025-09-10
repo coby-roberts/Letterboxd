@@ -4,8 +4,7 @@ import cobymurphy.api.accounts.dto.*;
 import cobymurphy.api.accounts.model.DiaryEntry;
 import cobymurphy.api.accounts.model.WatchedEntry;
 import cobymurphy.api.accounts.services.UserService;
-import cobymurphy.api.film.dto.FilmDto;
-import cobymurphy.api.film.service.FilmService;
+import cobymurphy.api.accounts.services.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -63,8 +62,8 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllDiaryEntryByUsername(username));
     }
 
-    @PostMapping("/diary/{id}")
-    public ResponseEntity<DiaryEntry> createDiaryEntry(@PathVariable int movieId,
+    @PostMapping("/diary/{movieId}")
+    public ResponseEntity<DiaryDto> createDiaryEntry(@PathVariable int movieId,
                                                        @RequestBody DiaryFilmDto diaryFilmDto,
                                                        UriComponentsBuilder ucb,
                                                        Principal principal) {
@@ -72,12 +71,14 @@ public class UserController {
         String username = principal.getName();
         DiaryEntry entry = userService.addDiaryEntry(username, diaryFilmDto.getDiaryDto(), diaryFilmDto.getFilmDto());
 
+        DiaryDto diaryDto = entry.convertToDto();
+
         URI location = ucb
-                .path("users/diary/{id}")
+                .path("users/diary/{movieId}")
                 .buildAndExpand(movieId)
                 .toUri();
 
-        return ResponseEntity.created(location).body(entry);
+        return ResponseEntity.created(location).body(diaryDto);
     }
 
     // TODO : implement userReview
@@ -96,7 +97,7 @@ public class UserController {
      * @return          A 201 created response with the location header to the new resource
      */
     @PostMapping("/watched/{movieId}")
-    public ResponseEntity<WatchedEntry> createWatchedEntry(@PathVariable int movieId,
+    public ResponseEntity<WatchedDto> createWatchedEntry(@PathVariable int movieId,
                                                            @RequestBody WatchedFilmDto watchedFilmDto,
                                                            Principal principal,
                                                            UriComponentsBuilder ucb) {
@@ -104,12 +105,14 @@ public class UserController {
         String username = principal.getName();
         WatchedEntry entry = userService.addWatchedEntry(username, watchedFilmDto.getFilm(), watchedFilmDto.getWatched());
 
+        WatchedDto watchedDto = entry.convertToDto();
+
         URI location = ucb
                 .path("users/film/{movieId}")
                 .buildAndExpand(movieId)
                 .toUri();
 
-        return ResponseEntity.created(location).body(entry);
+        return ResponseEntity.created(location).body(watchedDto);
     }
 }
 

@@ -1,6 +1,6 @@
-package cobymurphy.api.film.repository;
+package cobymurphy.api.accounts.repository;
 
-import cobymurphy.api.film.model.Film;
+import cobymurphy.api.accounts.model.Film;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.stereotype.Repository;

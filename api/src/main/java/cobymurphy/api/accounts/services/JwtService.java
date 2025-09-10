@@ -1,4 +1,4 @@
-package cobymurphy.api.jwt.service;
+package cobymurphy.api.accounts.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

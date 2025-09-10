@@ -1,7 +1,7 @@
-package cobymurphy.api.film.controller;
+package cobymurphy.api.accounts.controller;
 
-import cobymurphy.api.film.dto.FilmDto;
-import cobymurphy.api.film.service.FilmService;
+import cobymurphy.api.accounts.dto.FilmDto;
+import cobymurphy.api.accounts.services.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

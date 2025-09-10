@@ -1,7 +1,6 @@
 package cobymurphy.api.config;
 
 import cobymurphy.api.accounts.services.CustomUserDetailsService;
-import cobymurphy.api.jwt.config.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

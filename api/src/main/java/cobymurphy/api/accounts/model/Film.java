@@ -1,5 +1,5 @@
-package cobymurphy.api.film.model;
-import cobymurphy.api.film.dto.FilmDto;
+package cobymurphy.api.accounts.model;
+import cobymurphy.api.accounts.dto.FilmDto;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;

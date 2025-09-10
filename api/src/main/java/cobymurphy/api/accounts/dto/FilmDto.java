@@ -1,6 +1,6 @@
-package cobymurphy.api.film.dto;
+package cobymurphy.api.accounts.dto;
 
-import cobymurphy.api.film.model.Film;
+import cobymurphy.api.accounts.model.Film;
 
 import java.util.List;
 
