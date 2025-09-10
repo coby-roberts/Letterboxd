@@ -11,6 +11,8 @@ function Films({ searchQuery }) {
   const refs = useRef([]);
   const movieCardRef = useRef(null);
 
+  const className = "side-by-side";
+
   useEffect(() => {
     console.log("Search Query:", searchQuery);
     if (!searchQuery) return;
@@ -19,8 +21,9 @@ function Films({ searchQuery }) {
     )}&include_adult=false&language=en-US&page=1`;
     const options = {
       method: "GET",
-      headers: { accept: "application/json", 
-      Authorization: `Bearer ${TOKEN}` },
+      headers: { 
+        accept: "application/json", 
+         Authorization: `Bearer ${TOKEN}` },
     };
 
     fetch(url, options)
@@ -73,7 +76,7 @@ function Films({ searchQuery }) {
         setSelectedIndex={setSelectedIndex}
         onEnter={handleSearchEnter}
       />
-      <TmdbMovieCard ref={movieCardRef} movieId={selectedMovieId} />
+      <TmdbMovieCard class={className} ref={movieCardRef} movieId={selectedMovieId} />
     </div>
   );
 }

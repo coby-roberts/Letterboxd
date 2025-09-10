@@ -5,7 +5,7 @@ import fallbackImg from "../../assets/1280x720.webp";
 
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
-const TmdbMovieCard = forwardRef(({ movieId }, ref) => {
+const TmdbMovieCard = forwardRef(({ movieId, className }, ref) => {
   const [movieDetails, setMovieDetails] = useState(null);
 
   useEffect(() => {
@@ -35,9 +35,9 @@ const TmdbMovieCard = forwardRef(({ movieId }, ref) => {
 
   return (
     <div
-      className="TmdbMovieCard side-by-side"
+      className={className + " TmdbMovieCard"}
       style={{ fontFamily: "monospace", color: "#9AE6B4" }}
-      tabIndex={0}
+      tabIndex={3}
       ref={ref}
     >
       {/* Backdrop */}

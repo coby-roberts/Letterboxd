@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './TmdbSearch.css';
 
 function TmdbSearch({ searchResult, selectedIndex, setSelectedIndex, refs, onEnter }) {
@@ -19,10 +20,14 @@ function TmdbSearch({ searchResult, selectedIndex, setSelectedIndex, refs, onEnt
     }
   };
 
+  useEffect(() => {
+    
+  })
+
   return (
       <div
         className="TmdbSearch side-by-side"              
-        tabIndex={0}
+        tabIndex={2}
         onKeyDown={handleKeyDown}>
       <ul className="TmdbSearchResults">
         {searchResult && searchResult.length > 0 ? (

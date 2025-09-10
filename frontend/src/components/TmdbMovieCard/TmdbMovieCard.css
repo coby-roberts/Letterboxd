@@ -1,3 +1,15 @@
-.TmdbMovieCard {
+/* .TmdbMovieCard {
 
+} */
+
+.DashBoardTmdbMovieCard {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    min-width: 600;
+    height: calc(100vh - 210px);
+    z-index: 9999;
+    overflow: auto;
 }

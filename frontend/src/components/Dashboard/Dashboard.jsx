@@ -3,12 +3,16 @@ import Carousel from "../Carousel/Carousel";
 import Friends from "../Friends/Friends";
 
 import { useEffect, useState } from "react";
+import TmdbMovieCard from "../TmdbMovieCard/TmdbMovieCard";
 
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
 
 function Dashboard({ loggedIn }) {
   const [data, setData] = useState([]);
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+
+  const className = "DashBoardTmdbMovieCard";
 
   const url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US";
   const options = {
@@ -32,11 +36,12 @@ function Dashboard({ loggedIn }) {
   }, []);
 
   return (
-    <>
+    <div className="Dashboard">
       <h1>Dashboard</h1>
-      <Carousel data={data} title={"Trending"} />
+      <Carousel data={data} title={"Trending"} setSelectedMovieId={setSelectedMovieId}/>
       {/* {loggedIn && <Carousel />} */}
-    </>
+      {selectedMovieId && <TmdbMovieCard class={className} movieId={selectedMovieId} />}
+    </div>
   );
 }
 

@@ -9,6 +9,20 @@ import Diary from "../Diary/Diary";
 function Me({ username }) {
   const URL = `${import.meta.env.VITE_API_URL}/users`;
 
+  useEffect(() => {
+    fetch(URL, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
+    })
+  })
+
   return (
     <>
       <h1>Me</h1>

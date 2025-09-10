@@ -1,7 +1,6 @@
 import helpicon from "../../assets/help.svg";
 import "./Terminal.css";
 import { useState } from "react";
-
 import SearchHistory from "../SearchHistory/SearchHistory";
 import HelpMenu from "../HelpMenu/HelpMenu";
 
@@ -89,6 +88,7 @@ function Terminal({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
+            tabIndex={1}
           ></input>
           <img src={helpicon} className="help-icon" alt="help" onClick={toggleHelp}></img>
         </div>

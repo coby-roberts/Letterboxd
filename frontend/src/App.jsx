@@ -30,7 +30,7 @@ const [searchQuery, setSearchQuery] = useState(null);
     if (username) {
       setUsername(username);
     }
-  }, []);
+  }, [username]);
 
   return (
   <>
@@ -56,6 +56,12 @@ const [searchQuery, setSearchQuery] = useState(null);
         setUsername={setUsername}
       />
     )}
+    {/* {authModal === "TmdbMovieCard" && (
+      <TmdbMovieCard 
+      class={className} 
+      movieId={selectedMovieId}
+      />
+    )} */}
 
     {/* Terminal always available */}
     <Terminal

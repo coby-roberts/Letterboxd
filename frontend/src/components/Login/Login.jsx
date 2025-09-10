@@ -55,6 +55,10 @@ function Login({ setLoggedIn, setUsername, onClose }) {
     };
   }, [onClose]);
 
+  useEffect(() => {
+    usernameRef.current?.focus();
+  }, []);
+
   return (
     <form className="login-form" onSubmit={handleSubmit}>
       <div className="form-div">
