@@ -1,11 +1,11 @@
-package cobymurphy.api.accounts.response;
+package cobymurphy.api.accounts.dto;
 
-public class AuthResponse {
+public class AuthDto {
 
     private String username;
     private String token;
 
-    public AuthResponse(String username, String token) {
+    public AuthDto(String username, String token) {
         this.username = username;
         this.token = token;
     }

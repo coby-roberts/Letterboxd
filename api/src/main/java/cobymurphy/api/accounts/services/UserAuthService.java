@@ -3,13 +3,12 @@ package cobymurphy.api.accounts.services;
 import cobymurphy.api.accounts.dto.LoginDto;
 import cobymurphy.api.accounts.dto.RegisterDto;
 import cobymurphy.api.accounts.model.Users;
-import cobymurphy.api.accounts.repository.UserRepository;
-import cobymurphy.api.accounts.response.AuthResponse;
+import cobymurphy.api.accounts.repository.UserDao;
+import cobymurphy.api.accounts.dto.AuthDto;
 import cobymurphy.api.jwt.service.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +17,10 @@ import java.util.Optional;
 @Service
 public class UserAuthService {
 
-    private final UserRepository repository;
+    private final UserDao repository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    public UserAuthService(UserRepository repository, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public UserAuthService(UserDao repository, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.repository = repository;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
@@ -30,7 +29,7 @@ public class UserAuthService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 
-    public Optional<AuthResponse> register(RegisterDto registerDto) {
+    public Optional<AuthDto> register(RegisterDto registerDto) {
 
         if (repository.existsByUsername(registerDto.getUsername())) {
             return Optional.empty();
@@ -39,10 +38,10 @@ public class UserAuthService {
         Users user = new Users(registerDto.getUsername(), encoder.encode(registerDto.getPassword()), registerDto.getEmail());
         repository.save(user);
 
-        return Optional.of(new AuthResponse(user.getUsername(), jwtService.generateToken(user.getUsername())));
+        return Optional.of(new AuthDto(user.getUsername(), jwtService.generateToken(user.getUsername())));
     }
 
-    public AuthResponse verify(LoginDto loginDto) {
+    public AuthDto verify(LoginDto loginDto) {
 
 //        Users user = repository.findByUsername(loginDto.getUsername())
 //                .orElseThrow(() -> new UsernameNotFoundException("Username not found: " + loginDto.getUsername()));
@@ -51,7 +50,7 @@ public class UserAuthService {
                     new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
 
         if (authentication.isAuthenticated()) {
-            return new AuthResponse(loginDto.getUsername(), jwtService.generateToken(loginDto.getUsername()));
+            return new AuthDto(loginDto.getUsername(), jwtService.generateToken(loginDto.getUsername()));
         } else {
             throw new IllegalArgumentException("Unable to verify");
         }

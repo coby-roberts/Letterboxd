@@ -1,13 +1,16 @@
 package cobymurphy.api.accounts.controller;
 
-import cobymurphy.api.accounts.dto.DiaryDto;
-import cobymurphy.api.accounts.dto.ProfileDto;
+import cobymurphy.api.accounts.dto.*;
 import cobymurphy.api.accounts.model.DiaryEntry;
 import cobymurphy.api.accounts.model.WatchedEntry;
 import cobymurphy.api.accounts.services.UserService;
 import cobymurphy.api.film.dto.FilmDto;
 import cobymurphy.api.film.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,6 +34,19 @@ public class UserController {
         return ResponseEntity.ok(userService.getProfileByUsername(username));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<ProfileDto>> searchUsers(@RequestParam String searchQuery,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "username") String sortBy,
+        @RequestParam(defaultValue = "ASC") String sortDirection) {
+
+            Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+            Pageable pageable = PageRequest.of(page, size, sort);
+            Page<ProfileDto> users = userService.searchUsers(searchQuery, pageable);
+            return ResponseEntity.ok(users);
+    }
+
     /**
      * Returns a List of films watched by the user
      * @param username The username who's watched movies you want to receive
@@ -47,19 +63,18 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllDiaryEntryByUsername(username));
     }
 
-    @PostMapping("/diary/{title}") // FIXME: could be movieId instead
-    public ResponseEntity<DiaryEntry> createDiaryEntry(@PathVariable String title,
-                                                       @RequestBody DiaryDto diaryDto,
-                                                       @RequestBody FilmDto filmDto,
+    @PostMapping("/diary/{id}")
+    public ResponseEntity<DiaryEntry> createDiaryEntry(@PathVariable int movieId,
+                                                       @RequestBody DiaryFilmDto diaryFilmDto,
                                                        UriComponentsBuilder ucb,
                                                        Principal principal) {
 
         String username = principal.getName();
-        DiaryEntry entry = userService.addDiaryEntry(username, diaryDto, filmDto);
+        DiaryEntry entry = userService.addDiaryEntry(username, diaryFilmDto.getDiaryDto(), diaryFilmDto.getFilmDto());
 
         URI location = ucb
-                .path("users/diary/{title}")
-                .buildAndExpand(title)
+                .path("users/diary/{id}")
+                .buildAndExpand(movieId)
                 .toUri();
 
         return ResponseEntity.created(location).body(entry);
@@ -70,6 +85,34 @@ public class UserController {
     public String getUserReview(@PathVariable String username) {
         return "reviews.";
     }
+
+    /**
+     * Adds a watched entry to a users account
+     *
+     * @param movieId     MovieId of the film being added
+     * @param WatchedFilmDto   A watchedDto and FilmDto
+     * @param principal The authenticated user making the request
+     * @param ucb       Used to construct the URI of the newly created watched entry
+     * @return          A 201 created response with the location header to the new resource
+     */
+    @PostMapping("/watched/{movieId}")
+    public ResponseEntity<WatchedEntry> createWatchedEntry(@PathVariable int movieId,
+                                                           @RequestBody WatchedFilmDto watchedFilmDto,
+                                                           Principal principal,
+                                                           UriComponentsBuilder ucb) {
+
+        String username = principal.getName();
+        WatchedEntry entry = userService.addWatchedEntry(username, watchedFilmDto.getFilm(), watchedFilmDto.getWatched());
+
+        URI location = ucb
+                .path("users/film/{movieId}")
+                .buildAndExpand(movieId)
+                .toUri();
+
+        return ResponseEntity.created(location).body(entry);
+    }
+}
+
 
 //    // FIXME: currently just retrieves the movie title,
 //    /**
@@ -86,30 +129,3 @@ public class UserController {
 //
 //        return ResponseEntity.ok(filmService.findFilmByTitle(title));
 //    }
-
-    /**
-     * Adds a watched entry to a users account
-     *
-     * @param title     Title of the film being added
-     * @param filmDto   Relating to the passed title
-     * @param principal The authenticated user making the request
-     * @param ucb       Used to construct the URI of the newly created watched entry
-     * @return          A 201 created response with the location header to the new resource
-     */
-    @PostMapping("/film/{title}")
-    public ResponseEntity<WatchedEntry> createWatchedEntry(@PathVariable String title,
-                                                           @RequestBody FilmDto filmDto,
-                                                           Principal principal,
-                                                           UriComponentsBuilder ucb) {
-
-        String username = principal.getName();
-        WatchedEntry entry = userService.addWatchedEntry(username, filmDto);
-
-        URI location = ucb
-                .path("users/film/{title}")
-                .buildAndExpand(title)
-                .toUri();
-
-        return ResponseEntity.created(location).body(entry);
-    }
-}

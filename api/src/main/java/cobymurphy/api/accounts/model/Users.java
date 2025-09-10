@@ -11,6 +11,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "USERS")
 public class Users {
@@ -59,112 +66,10 @@ public class Users {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Users() {}
-
     public Users(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                '}';
-    }
-
-    public List<WatchedEntry> getWatched() {
-        return watched;
-    }
-
-    public void setWatched(List<WatchedEntry> watched) {
-        this.watched = watched;
-    }
-
-    public List<DiaryEntry> getDiary() {
-        return diary;
-    }
-
-    public void setDiary(List<DiaryEntry> diary) {
-        this.diary = diary;
-    }
-
-    public List<WatchList> getWatchlist() {
-        return lists;
-    }
-
-    public void setWatchlist(List<WatchList> watchlist) {
-        this.lists = watchlist;
-    }
-
-    public Set<Users> getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(Set<Users> following) {
-        following = following;
-    }
-
-    public Set<Users> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<Users> followers) {
-        followers = followers;
-    }
-
-    public String getGivenName() {
-        return givenName;
-    }
-
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
-    }
-
-    public String getFamilyName() {
-        return familyName;
-    }
-
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
     }
 
     public ProfileDto convertToProfileDTO() {

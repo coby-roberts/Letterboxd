@@ -1,21 +1,16 @@
 package cobymurphy.api.accounts.dto;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiaryDto {
+public class WatchedDto {
 
     private long entry_id;
     private String username;
-    private long film_id;
-    private LocalDate watchDate;
     private int rating;
-    private String review;
-
 }

@@ -1,6 +1,6 @@
 package cobymurphy.api.accounts.dto;
 
-import java.time.LocalDate;
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,13 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiaryDto {
-
-    private long entry_id;
+public class UpdateUsernameDto {
+    @NotBlank
     private String username;
-    private long film_id;
-    private LocalDate watchDate;
-    private int rating;
-    private String review;
 
 }

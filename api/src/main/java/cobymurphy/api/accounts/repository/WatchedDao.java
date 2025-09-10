@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 
-public interface WatchedRepository extends JpaRepository<WatchedEntry, Long> {
+public interface WatchedDao extends JpaRepository<WatchedEntry, Long> {
 
     List<WatchedEntry> findByUser_Username(String username);
 

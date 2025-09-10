@@ -12,8 +12,8 @@ public class FilmController {
     @Autowired
     FilmService filmService;
 
-    @GetMapping("/film/{title}")
-    public ResponseEntity<FilmDto> find(@PathVariable String title) {
-        return ResponseEntity.ok(filmService.findFilmByTitle(title));
+    @GetMapping("/film/{id}")
+    public ResponseEntity<FilmDto> find(@PathVariable long id) {
+        return ResponseEntity.ok(filmService.findFilmById(id));
     }
 }

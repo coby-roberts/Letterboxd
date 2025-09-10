@@ -1,6 +1,6 @@
 package cobymurphy.api.accounts.services;
 
-import cobymurphy.api.accounts.repository.UserRepository;
+import cobymurphy.api.accounts.repository.UserDao;
 import cobymurphy.api.accounts.model.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Primary
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    private UserRepository repository;
+    private UserDao repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

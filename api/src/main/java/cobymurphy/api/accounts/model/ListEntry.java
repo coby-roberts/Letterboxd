@@ -3,6 +3,13 @@ package cobymurphy.api.accounts.model;
 import cobymurphy.api.film.model.Film;
 import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class ListEntry {
 
@@ -20,43 +27,4 @@ public class ListEntry {
 
     private String list_name;
 
-    public ListEntry() { }
-
-    public ListEntry(WatchList watchList, Film film, String list_name) {
-        this.watchList = watchList;
-        this.film = film;
-        this.list_name = list_name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public WatchList getWatchList() {
-        return watchList;
-    }
-
-    public void setWatchList(WatchList watchList) {
-        this.watchList = watchList;
-    }
-
-    public Film getFilm() {
-        return film;
-    }
-
-    public void setFilm(Film film) {
-        this.film = film;
-    }
-
-    public String getList_name() {
-        return list_name;
-    }
-
-    public void setList_name(String list_name) {
-        this.list_name = list_name;
-    }
 }

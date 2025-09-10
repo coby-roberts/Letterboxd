@@ -1,8 +1,7 @@
 package cobymurphy.api.accounts.controller;
 import cobymurphy.api.accounts.dto.SettingsDto;
-import cobymurphy.api.accounts.dto.UpdateUsernameRequest;
+import cobymurphy.api.accounts.dto.UpdateUsernameDto;
 import cobymurphy.api.accounts.exception.UsernameConflictException;
-import cobymurphy.api.accounts.response.UpdatedUsernameResponse;
 import cobymurphy.api.accounts.services.UserService;
 
 import jakarta.validation.Valid;
@@ -43,10 +42,10 @@ public class AccountSettingsController {
     }
 
     @PutMapping("/me/username")
-    public ResponseEntity<?> updateUsername(@RequestBody @Valid UpdateUsernameRequest request, Principal principal) {
+    public ResponseEntity<?> updateUsername(@RequestBody @Valid UpdateUsernameDto request, Principal principal) {
         String username = principal.getName();
         try {
-            UpdatedUsernameResponse updated = userService.changeUsername(username, request.getUsername());
+            UpdateUsernameDto updated = userService.changeUsername(username, request.getUsername());
             return ResponseEntity.ok(updated);
         } catch (UsernameNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
