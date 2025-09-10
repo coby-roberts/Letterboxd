@@ -30,12 +30,11 @@ A RESTful API for tracking users watched films, ratings, and discovering.
 - `GET /users/{username}` - Gets User profile details
 - `GET /users/{username}/films` - Get all of a users watched films
 - `GET /users/{username}/diary` - Get all of a users diary entries
-- `POST /users/diary/{id}` - Create a Diary Entry
+- `POST /users/{username}/diary` - Create a Diary Entry
 - `GET /users/{username}/reviews` - NOT IMPLEMENTED
-- `POST /users/watched/{movieId}` - Set film as watched
-
-- `PUT /users/me/watched/{id}` - Update rating
-- `DELETE /users/me/watched/{id}` - Remove from watched list
+- `POST /users/{username}/watched` - Set film as watched
+- `POST /users/{username}/follow` - Follows a user
+- `POST /users/{username}/unfollow` - Unfollows a user
 
 ### Films
 - `GET /film/{id}`

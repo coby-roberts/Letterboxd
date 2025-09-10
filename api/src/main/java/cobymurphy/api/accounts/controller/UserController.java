@@ -2,6 +2,7 @@ package cobymurphy.api.accounts.controller;
 
 import cobymurphy.api.accounts.dto.*;
 import cobymurphy.api.accounts.model.DiaryEntry;
+import cobymurphy.api.accounts.model.Users;
 import cobymurphy.api.accounts.model.WatchedEntry;
 import cobymurphy.api.accounts.services.UserService;
 import cobymurphy.api.accounts.services.FilmService;
@@ -27,6 +28,7 @@ public class UserController {
 
     @Autowired
     FilmService filmService;
+
 
     @GetMapping("/{username}")
     public ResponseEntity<ProfileDto> profile(@PathVariable String username) {
@@ -62,20 +64,18 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllDiaryEntryByUsername(username));
     }
 
-    @PostMapping("/diary/{movieId}")
-    public ResponseEntity<DiaryDto> createDiaryEntry(@PathVariable int movieId,
-                                                       @RequestBody DiaryFilmDto diaryFilmDto,
+    @PostMapping("/{username}/diary")
+    public ResponseEntity<DiaryDto> createDiaryEntry(@RequestBody DiaryFilmDto diaryFilmDto,
                                                        UriComponentsBuilder ucb,
                                                        Principal principal) {
 
         String username = principal.getName();
         DiaryEntry entry = userService.addDiaryEntry(username, diaryFilmDto.getDiaryDto(), diaryFilmDto.getFilmDto());
-
         DiaryDto diaryDto = entry.convertToDto();
 
         URI location = ucb
-                .path("users/diary/{movieId}")
-                .buildAndExpand(movieId)
+                .path("users/{username/diary")
+                .buildAndExpand(username)
                 .toUri();
 
         return ResponseEntity.created(location).body(diaryDto);
@@ -90,17 +90,15 @@ public class UserController {
     /**
      * Adds a watched entry to a users account
      *
-     * @param movieId     MovieId of the film being added
-     * @param WatchedFilmDto   A watchedDto and FilmDto
+     * @param watchedFilmDto   A watchedDto and FilmDto
      * @param principal The authenticated user making the request
      * @param ucb       Used to construct the URI of the newly created watched entry
      * @return          A 201 created response with the location header to the new resource
      */
-    @PostMapping("/watched/{movieId}")
-    public ResponseEntity<WatchedDto> createWatchedEntry(@PathVariable int movieId,
-                                                           @RequestBody WatchedFilmDto watchedFilmDto,
-                                                           Principal principal,
-                                                           UriComponentsBuilder ucb) {
+    @PostMapping("/{username}/watched/")
+    public ResponseEntity<WatchedDto> createWatchedEntry(@RequestBody WatchedFilmDto watchedFilmDto,
+                                                         Principal principal,
+                                                         UriComponentsBuilder ucb) {
 
         String username = principal.getName();
         WatchedEntry entry = userService.addWatchedEntry(username, watchedFilmDto.getFilm(), watchedFilmDto.getWatched());
@@ -108,13 +106,42 @@ public class UserController {
         WatchedDto watchedDto = entry.convertToDto();
 
         URI location = ucb
-                .path("users/film/{movieId}")
-                .buildAndExpand(movieId)
+                .path("users/{username}/film")
+                .buildAndExpand(username)
                 .toUri();
 
         return ResponseEntity.created(location).body(watchedDto);
     }
+
+    @PostMapping("/{username}/follow")
+    public ResponseEntity<ProfileDto> followUser(@PathVariable String username, Principal principal, UriComponentsBuilder ucb) {
+
+        Users followedUser = userService.followUser(principal.getName(), username);
+        ProfileDto followedUserDto = followedUser.convertToProfileDTO();
+
+        URI location = ucb
+                .path("users/{username}/follow")
+                .buildAndExpand(username)
+                .toUri();
+
+        return ResponseEntity.created(location).body(followedUserDto);
+    }
+    @PostMapping("/{username}/unfollow")
+    public ResponseEntity<ProfileDto> unfollowUser(@PathVariable String username, Principal principal, UriComponentsBuilder ucb) {
+
+        Users unfollowedUser = userService.followUser(principal.getName(), username);
+        ProfileDto unfollowedUserDto = unfollowedUser.convertToProfileDTO();
+
+
+        URI location = ucb
+                .path("users/{username}/unfollow")
+                .buildAndExpand(username)
+                .toUri();
+
+        return ResponseEntity.created(location).body(unfollowedUserDto);
+    }
 }
+
 
 
 //    // FIXME: currently just retrieves the movie title,

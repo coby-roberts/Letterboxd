@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProfileDto {
-
+    private long id;
     private String username;
     private String bio;
     Set<Users> Following = new HashSet<>();

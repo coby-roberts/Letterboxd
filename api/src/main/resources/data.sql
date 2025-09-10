@@ -1,3 +1,3 @@
---INSERT INTO users (id, username, password, email)
---VALUES (22, 'coby', '$2a$12$v0BlAeTMKDvjFEesfZIgHehSfovo7FwwlerbdtBH3.F9SJdI6aif.', 'coby@gmail.com');
-
+INSERT INTO "users" (id, username, password, email) VALUES (1001, 'coby', '$2a$12$v0BlAeTMKDvjFEesfZIgHehSfovo7FwwlerbdtBH3.F9SJdI6aif.', 'coby@gmail.com');
+INSERT INTO "users" (id, username, password, email) VALUES (2001, 'me', '$2a$12$v0BlAeTMKDvjFEesfZIgHehSfovo7FwwlerbdtBH3.F9SJdI6aif.', 'me@gmail.com');
+INSERT INTO "users" (id, username, password, email) VALUES (3001, 'you', '$2a$12$v0BlAeTMKDvjFEesfZIgHehSfovo7FwwlerbdtBH3.F9SJdI6aif.', 'you@gmail.com');

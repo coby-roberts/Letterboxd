@@ -159,4 +159,36 @@ public class UserService {
         Page<Users> users = userDao.findByUsernameContainingIgnoreCase(searchQuery.trim(), pageable);
         return users.map(Users::convertToProfileDTO);
     }
+
+    public Users followUser(String followerUsername, String followedUsername) {
+        Users follower = userDao.findByUsername(followerUsername)
+                .orElseThrow(() -> new UsernameNotFoundException("Follower not found"));
+
+        Users followed = userDao.findByUsername(followedUsername)
+                .orElseThrow(() -> new UsernameNotFoundException("Followed not found"));
+
+        if (follower.getFollowing().contains(followed)) {
+            throw new IllegalStateException("Already Following");
+        }
+
+        follower.getFollowing().add(followed);
+
+        return userDao.save(follower);
+    }
+
+    public Users unfollowUser(String followerUsername, String unfollowedUsername) {
+        Users follower = userDao.findByUsername(followerUsername)
+                .orElseThrow(() -> new UsernameNotFoundException("Follower not found"));
+
+        Users unfollowed = userDao.findByUsername(unfollowedUsername)
+                .orElseThrow(() -> new UsernameNotFoundException("Followed not found"));
+
+        if (!follower.getFollowing().contains(unfollowed)) {
+            throw new IllegalStateException("Already Unfollowed");
+        }
+
+        follower.getFollowing().remove(unfollowed);
+
+        return userDao.save(follower);
+    }
 }

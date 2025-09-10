@@ -62,10 +62,6 @@ public class Users {
     @ManyToMany(mappedBy = "following")
     Set<Users> followers = new HashSet<>();
 
-    public String getEmail() {
-        return email;
-    }
-
     public Users(String username, String password, String email) {
         this.username = username;
         this.password = password;
@@ -74,6 +70,7 @@ public class Users {
 
     public ProfileDto convertToProfileDTO() {
         return new ProfileDto(
+                this.getId(),
                 this.getUsername(),
                 this.getBio(),
                 this.getFollowing(),
