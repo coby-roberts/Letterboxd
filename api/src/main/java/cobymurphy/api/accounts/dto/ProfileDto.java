@@ -16,7 +16,7 @@ public class ProfileDto {
     private long id;
     private String username;
     private String bio;
-    Set<Users> Following = new HashSet<>();
-    Set<Users> Followers = new HashSet<>();
+    Set<SimpleUserDto> Following = new HashSet<>();
+    Set<SimpleUserDto> Followers = new HashSet<>();
 
 }

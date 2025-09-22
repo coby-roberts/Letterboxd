@@ -1,12 +1,14 @@
-.carousel {
-  border: 2px solid hsl(0, 0%, 0%);
+.Carousel {
   margin: 5px;
   padding: 5px;
+
+  height: auto;
 }
 
 .carousel-heading {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  font-family: "Courier New", monospace;
 }
 
 .carousel-heading h1 {
@@ -25,17 +27,14 @@
 }
 
 .posters {
-  display: flex;
-  overflow: hidden;
-  scroll-behavior: smooth;
-}
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(120px, 10vw, 250px);
+  overflow-x: auto;
+  scrollbar-width: none;
 
-.poster {
-  margin-right: 6px;
-}
-
-.poster img {
+  gap: 1rem;
   width: 100%;
-  height: auto;
-  display: block;
+  padding: 0.5rem;
+  box-sizing: border-box;
 }

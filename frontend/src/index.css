@@ -7,22 +7,33 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Colours */
+  --colour-border: var(--colour-robineggblue);
+  --colour-celest: #9ce9ea;
+  --colour-emerald: #70dd94;
+  --colour-midnightgreen: #1A535C;
+  --colour-robineggblue: #4ECDC4;
+  --colour-lightred: #FF6B6B;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 body {
-  margin: 0;
+  background-image: url('../public/Screenshot\ 2025-09-21\ at\ 2.29.31\ pm.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   min-width: 320px;
-  min-height: 100vh;
-}
-
-.side-by-side {
-  margin: 10px;
-  border: 2px solid black;
-  height: calc(100% - 20px);
-
-  overflow-y: auto;
-  flex-direction: column;
-  
-  background: black;
-  color: green;
+  min-height: 200px;
+  height: 100%;
 }

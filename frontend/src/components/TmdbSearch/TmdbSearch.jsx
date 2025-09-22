@@ -41,8 +41,7 @@ function TmdbSearch({ searchResult, selectedIndex, setSelectedIndex, refs, onEnt
             >{item.release_date} {item.title}</li>
           ))
         ) : (
-          <li>No Results
-          </li>
+          <></>
           )}
       </ul>
       </div>

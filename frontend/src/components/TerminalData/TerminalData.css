@@ -1,0 +1,48 @@
+.TerminalData {
+  height: 240px;
+  justify-content: flex-end;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.TerminalList {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  color: var(--colour-emerald);
+}
+
+.TerminalList:focus {
+  outline: none;
+}
+
+.FilmListItem:focus {
+  outline: none;
+}
+
+
+.TerminalList .release-date {
+  color: white;
+}
+
+
+.FilmListItem:focus,
+.SelectedFilmListItem {
+  color: var(--colour-lightred);
+  border: none;
+  outline: none;
+  padding: 0px;
+  box-shadow: none;
+}
+
+.FilmListItem:focus-visible,
+.SelectedFilmListItem:focus-visible {
+  outline: none;
+  border: none;
+  box-shadow: none; 
+}

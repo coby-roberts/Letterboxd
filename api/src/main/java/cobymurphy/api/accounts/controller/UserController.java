@@ -4,8 +4,8 @@ import cobymurphy.api.accounts.dto.*;
 import cobymurphy.api.accounts.model.DiaryEntry;
 import cobymurphy.api.accounts.model.Users;
 import cobymurphy.api.accounts.model.WatchedEntry;
-import cobymurphy.api.accounts.services.UserService;
 import cobymurphy.api.accounts.services.FilmService;
+import cobymurphy.api.accounts.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +17,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -28,7 +30,6 @@ public class UserController {
 
     @Autowired
     FilmService filmService;
-
 
     @GetMapping("/{username}")
     public ResponseEntity<ProfileDto> profile(@PathVariable String username) {
@@ -58,10 +59,21 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllWatchedEntryByUsername(username));
     }
 
-    // TODO : implement userDiary
+    // TODO : Use pagination
     @GetMapping("/{username}/diary")
-    public ResponseEntity<List<DiaryEntry>> getUserDiary(@PathVariable String username) {
-        return ResponseEntity.ok(userService.findAllDiaryEntryByUsername(username));
+    public ResponseEntity<List<DiaryFilmDto>> getUserDiary(@PathVariable String username) {
+
+        List<DiaryEntry> diaryEntries= userService.findAllDiaryEntryByUsername(username);
+
+        List<DiaryFilmDto> dfDto = diaryEntries.stream()
+                .filter(entry -> entry.getFilm() != null)
+                .map(entry -> new DiaryFilmDto(
+                        entry.convertToDto(),
+                        filmService.findFilmById(entry.getFilm().getId())
+                ))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(dfDto);
     }
 
     @PostMapping("/{username}/diary")
@@ -74,7 +86,7 @@ public class UserController {
         DiaryDto diaryDto = entry.convertToDto();
 
         URI location = ucb
-                .path("users/{username/diary")
+                .path("users/{username}/diary")
                 .buildAndExpand(username)
                 .toUri();
 
@@ -96,17 +108,17 @@ public class UserController {
      * @return          A 201 created response with the location header to the new resource
      */
     @PostMapping("/{username}/watched/")
-    public ResponseEntity<WatchedDto> createWatchedEntry(@RequestBody WatchedFilmDto watchedFilmDto,
+    public ResponseEntity<WatchedDto> updateWatchedEntry(@RequestBody WatchedFilmDto watchedFilmDto,
                                                          Principal principal,
                                                          UriComponentsBuilder ucb) {
 
         String username = principal.getName();
-        WatchedEntry entry = userService.addWatchedEntry(username, watchedFilmDto.getFilm(), watchedFilmDto.getWatched());
+        WatchedEntry entry = userService.updateWatchedEntry(username, watchedFilmDto.getFilm(), watchedFilmDto.getWatched());
 
         WatchedDto watchedDto = entry.convertToDto();
 
         URI location = ucb
-                .path("users/{username}/film")
+                .path("users/{username}/watched")
                 .buildAndExpand(username)
                 .toUri();
 

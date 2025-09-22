@@ -1,83 +1,50 @@
-import TmdbMovieCard from "../TmdbMovieCard/TmdbMovieCard";
-import TmdbSearch from "../TmdbSearch/TmdbSearch";
 import "./Films.css";
 
-const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
-import { useEffect, useState, useRef } from "react";
-function Films({ searchQuery }) {
+import { useEffect, useState } from "react";
+function Films({ setSelectedMovieId, username }) {
+  const [films, setFilms] = useState([]);
 
-  const [searchResult, setSearchResult] = useState(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const refs = useRef([]);
-  const movieCardRef = useRef(null);
+  const URL = `${import.meta.env.VITE_API_URL}/users/${username}/films`;
 
-  const className = "side-by-side";
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  };
 
   useEffect(() => {
-    console.log("Search Query:", searchQuery);
-    if (!searchQuery) return;
-    const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
-      searchQuery
-    )}&include_adult=false&language=en-US&page=1`;
-    const options = {
-      method: "GET",
-      headers: { 
-        accept: "application/json", 
-         Authorization: `Bearer ${TOKEN}` },
-    };
-
-    fetch(url, options)
+    fetch(URL, options)
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
-        setSearchResult(json.results);
-        if (json.results && json.results.length > 0) {
-          setSelectedIndex(0);
-        }
+        setFilms(json);
       })
-      .catch((err) => console.error(err));
-  }, [searchQuery]);
-
-  useEffect(() => {
-    if (refs.current[selectedIndex]) {
-      refs.current[selectedIndex].focus();
-    }
-  }, [selectedIndex]);
-
-  useEffect(() => {
-    if (searchResult && searchResult.length > 0) {
-      setSelectedIndex(0);
-      setTimeout(() => {
-        if (refs.current[0]) {
-          refs.current[0].focus();        
-        }
-      }, 0);
-    }  
-  }, [searchResult])
-
-  const selectedMovieId =
-    searchResult && searchResult[selectedIndex]
-      ? searchResult[selectedIndex].id
-      : null;
-
-
-  const handleSearchEnter = () => {
-    if (movieCardRef.current) {
-      movieCardRef.current.focus();
-    }
-  }
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
-    <div className="Films">
-      <TmdbSearch
-        refs={refs}
-        searchResult={searchResult}
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
-        onEnter={handleSearchEnter}
-      />
-      <TmdbMovieCard class={className} ref={movieCardRef} movieId={selectedMovieId} />
-    </div>
+    <section className="Films">
+      <h1>Films</h1>
+      <ul className="UserFilmList">
+        {films && films.length > 0 ? (
+          films.map((item) => (
+            <li
+              key={item.watched_id}
+              className={"UserFilmListItem"}
+              onClick={() => setSelectedMovieId(item.film.id)}
+            >
+            <img src={`https://image.tmdb.org/t/p/w185/${item.film.poster_path}`}/>
+            <p>{item.film.title}</p>
+            </li>
+          ))
+        ) : (
+          <></>
+        )}
+      </ul>
+    </section>
   );
 }
 export default Films;

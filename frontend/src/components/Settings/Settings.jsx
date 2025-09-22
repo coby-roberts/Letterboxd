@@ -78,7 +78,7 @@ function Settings({ setUsername, accountUsername }) {
     return (
     <>
       {data ? (
-        <form className="settings" onSubmit={submitSettingsForm}>
+        <form className="Settings Modal" onSubmit={submitSettingsForm}>
           <div className="form-row">
             <label htmlFor="username">username</label>
             <input

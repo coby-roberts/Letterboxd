@@ -11,12 +11,13 @@ import Signup from "./components/Signup/Signup";
 import Terminal from "./components/Terminal/Terminal";
 
 function App() {
-
-const [activePage, setActivePage] = useState("dashboard");
-const [authModal, setAuthModal] = useState(null);
-const [username, setUsername] = useState(localStorage.getItem("username") || null);
-const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
-const [searchQuery, setSearchQuery] = useState(null);
+  const [activePage, setActivePage] = useState("dashboard");
+  const [authModal, setAuthModal] = useState(null);
+  const [username, setUsername] = useState(
+    localStorage.getItem("username") || null
+  );
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,47 +34,48 @@ const [searchQuery, setSearchQuery] = useState(null);
   }, [username]);
 
   return (
-  <>
-    {/* Main screen */}
-    {activePage === "dashboard" && <Dashboard loggedIn={loggedIn} />}
-    {activePage === "films" && <Films searchQuery={searchQuery} />}
-    {activePage === "settings" && loggedIn && <Settings setUsername={setUsername} accountUsername={username}/>}
-    {activePage === "me" && loggedIn && <Me username={username} />}
+    <>
+      {/* Main screen */}
+      {activePage === "dashboard" && (
+        <Dashboard
+          loggedIn={loggedIn}
+          selectedMovieId={selectedMovieId}
+          setSelectedMovieId={setSelectedMovieId}
+        />
+      )}
+      {activePage === "settings" && loggedIn && (
+        <Settings setUsername={setUsername} accountUsername={username} />
+      )}
+      {activePage === "me" && loggedIn && <Me username={username} setSelectedMovieId={setSelectedMovieId} />}
 
-
-    {/* Auth modals */}
-    {authModal === "login" && (
-      <Login
-        onClose={() => setAuthModal(null)}
-        setLoggedIn={setLoggedIn}
+      {/* Terminal always available */}
+      <Terminal
+        setActivePage={setActivePage}
+        setAuthModal={setAuthModal}
+        username={username}
         setUsername={setUsername}
-      />
-    )}
-    {authModal === "signup" && (
-      <Signup
-        onClose={() => setAuthModal(null)}
+        loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}
-        setUsername={setUsername}
+        setSelectedMovieId={setSelectedMovieId}
+        selectedMovieId={selectedMovieId}
       />
-    )}
-    {/* {authModal === "TmdbMovieCard" && (
-      <TmdbMovieCard 
-      class={className} 
-      movieId={selectedMovieId}
-      />
-    )} */}
 
-    {/* Terminal always available */}
-    <Terminal
-      setActivePage={setActivePage}
-      setAuthModal={setAuthModal}
-      username={username}
-      setUsername={setUsername}
-      loggedIn={loggedIn}
-      setLoggedIn={setLoggedIn}
-      setSearchQuery={setSearchQuery}
-    />
-  </>
+      {/* Auth modals */}
+      {authModal === "login" && (
+        <Login
+          onClose={() => setAuthModal(null)}
+          setLoggedIn={setLoggedIn}
+          setUsername={setUsername}
+        />
+      )}
+      {authModal === "signup" && (
+        <Signup
+          onClose={() => setAuthModal(null)}
+          setLoggedIn={setLoggedIn}
+          setUsername={setUsername}
+        />
+      )}
+    </>
   );
 }
 

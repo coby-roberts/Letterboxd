@@ -56,9 +56,14 @@ public class UserService {
     /**
      * @param username of the user whose films you want to retrieve
      * @return a list of the users watched films
+     *
      */
     public List<WatchedEntry> findAllWatchedEntryByUsername(String username) {
+
         return watchedDao.findByUser_Username(username);
+    }
+    public List<WatchedEntry> findAllWatchedEntryByUsername(Long id) {
+        return watchedDao.findByUser_Id(id);
     }
 
     // TODO: create a diaryDto to return instead of this.
@@ -78,19 +83,24 @@ public class UserService {
         Film film = filmDao.findById(filmDto.getId())
                 .orElseGet(() -> addFilm(filmDto));
 
-        DiaryEntry entry = new DiaryEntry();
-        entry.setUser(user);
-        entry.setFilm(film);
-        entry.setWatchDate(diaryDto.getWatchDate());
+        WatchedEntry watchedEntry = watchedDao.findByUserAndFilm(user, film)
+                .orElse(new WatchedEntry(user, film, diaryDto.getRating()));
+        watchedEntry.setRating(diaryDto.getRating());
+        watchedDao.save(watchedEntry);
+
+        DiaryEntry diaryEntry = new DiaryEntry();
+        diaryEntry.setUser(user);
+        diaryEntry.setFilm(film);
+        diaryEntry.setWatchDate(diaryDto.getWatchDate());
 
         if (diaryDto.getReview() != null) {
-            entry.setReview(diaryDto.getReview());
+            diaryEntry.setReview(diaryDto.getReview());
         }
         if (diaryDto.getRating() > 0) {
-            entry.setRating(diaryDto.getRating());
+            diaryEntry.setRating(diaryDto.getRating());
         }
 
-        return diaryDao.save(entry);
+        return diaryDao.save(diaryEntry);
     }
 
     /**
@@ -99,7 +109,7 @@ public class UserService {
      * @param username The authenticated user making the request
      * @param filmDto   DTO containing details of the film and user rating
      */
-    public WatchedEntry addWatchedEntry(String username, FilmDto filmDto, WatchedDto watchedDto) {
+    public WatchedEntry updateWatchedEntry(String username, FilmDto filmDto, WatchedDto watchedDto) {
 
         Users user = userDao.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));

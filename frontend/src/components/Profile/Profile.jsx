@@ -18,21 +18,18 @@ function Profile({ username }) {
         console.log(JSON.stringify(json));
         setProfileData(json);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
   }, [username]);
 
   return (
     <div className="Profile">
-      <h2>Profile</h2>
       {profileData ? (
         <>
           <p>{profileData.username}</p>
           <p>{profileData.bio}</p>
         </>
       ) : (
-        <p>Loading...</p>
+        <></>
       )}
     </div>
   );

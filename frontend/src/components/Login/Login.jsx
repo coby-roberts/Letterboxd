@@ -60,7 +60,7 @@ function Login({ setLoggedIn, setUsername, onClose }) {
   }, []);
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
+    <form className="login-form Modal" onSubmit={handleSubmit}>
       <div className="form-div">
         <label htmlFor="loginusername">username</label>
         <input type="text" id="loginusername" ref={usernameRef} required />

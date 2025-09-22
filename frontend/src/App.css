@@ -1,0 +1,9 @@
+.Modal {
+    background-color: rgba(20, 20, 20);
+    color: white;
+    border: 3px solid var(--colour-border);
+    border-radius: 18px;
+    padding: 12px;
+    font-family: "Courier", "Monaco", monospace;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}

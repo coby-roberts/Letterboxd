@@ -66,7 +66,7 @@ function Signup({ setLoggedIn, setUsername, onClose }) {
   }, [onClose]);
 
   return (
-    <form className="signup-form" onSubmit={submitSignup}>
+    <form className="signup-form Modal" onSubmit={submitSignup}>
       <div className="form-div">
         <label htmlFor="signupemail">email</label>
         <input type="text" id="signupemail" ref={emailRef} required />

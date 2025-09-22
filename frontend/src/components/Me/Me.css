@@ -1,0 +1,16 @@
+.Me {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 700px;
+  width: 700px;
+  z-index: 9990;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.UserNav {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}

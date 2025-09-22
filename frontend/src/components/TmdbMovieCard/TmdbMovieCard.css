@@ -1,15 +1,17 @@
-/* .TmdbMovieCard {
+.TmdbMovieCard {
+  position: absolute;
+  top: 40px;
+  right: 80px;
+  height: 600px;
+  width: 600px;
+  z-index: 9990;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
 
-} */
-
-.DashBoardTmdbMovieCard {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    min-width: 600;
-    height: calc(100vh - 210px);
-    z-index: 9999;
-    overflow: auto;
+.TmdbMovieCardImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
 }

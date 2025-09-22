@@ -2,6 +2,7 @@ package cobymurphy.api.accounts.model;
 
 import cobymurphy.api.accounts.dto.ProfileDto;
 import cobymurphy.api.accounts.dto.SettingsDto;
+import cobymurphy.api.accounts.dto.SimpleUserDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import net.minidev.json.annotate.JsonIgnore;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -69,12 +71,20 @@ public class Users {
     }
 
     public ProfileDto convertToProfileDTO() {
+        Set<SimpleUserDto> followingDto = this.getFollowing().stream()
+                .map(u -> new SimpleUserDto(u.getId(), u.getUsername()))
+                .collect(Collectors.toSet());
+
+        Set<SimpleUserDto> followersDto = this.getFollowers().stream()
+                .map(u -> new SimpleUserDto(u.getId(), u.getUsername()))
+                .collect(Collectors.toSet());
+
         return new ProfileDto(
                 this.getId(),
                 this.getUsername(),
                 this.getBio(),
-                this.getFollowing(),
-                this.getFollowers()
+                followingDto,
+                followersDto
         );
     }
 
