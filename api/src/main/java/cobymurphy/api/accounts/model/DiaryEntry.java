@@ -31,7 +31,7 @@ public class DiaryEntry {
 
     @Column(nullable = false)
     private LocalDate watchDate;
-    private int rating;
+    private Integer rating;
     private String review;
 
 //    public DiaryEntry(Users user, Film film, LocalDate watchDate) {

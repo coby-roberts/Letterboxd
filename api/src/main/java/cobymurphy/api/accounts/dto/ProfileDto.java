@@ -18,5 +18,4 @@ public class ProfileDto {
     private String bio;
     Set<SimpleUserDto> Following = new HashSet<>();
     Set<SimpleUserDto> Followers = new HashSet<>();
-
 }

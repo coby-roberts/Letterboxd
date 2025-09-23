@@ -16,14 +16,18 @@ function Me({ username, setSelectedMovieId }) {
           <li
             key="diary"
             className="UserNavItem"
+            tabIndex={0}
             onClick={() => setSelectedPage("diary")}
+            onKeyDown={(e) => e.key === "Enter" && setSelectedPage("diary")}
           >
             Diary
           </li>
           <li
             key="films"
             className="UserNavItem"
+            tabIndex={0}
             onClick={() => setSelectedPage("films")}
+            onKeyDown={(e) => e.key === "Enter" && setSelectedPage("films")}
           >
             Films
           </li>

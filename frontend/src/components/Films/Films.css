@@ -1,11 +1,19 @@
-/* .Films {
+.Films {
 
 }
 
 .UserFilmList {
-
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(120px, 10vw, 250px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
 }
 
 .UserFilmListItem {
 
-} */
+}

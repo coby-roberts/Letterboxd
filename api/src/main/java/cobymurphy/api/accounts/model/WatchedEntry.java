@@ -24,7 +24,8 @@ public class WatchedEntry {
     @OneToOne
     @JoinColumn(name = "film_id")
     private Film film;
-    private int rating;
+
+    private Integer rating;
 
     public WatchedEntry(Users user, Film film, int rating) {
         this.user = user;

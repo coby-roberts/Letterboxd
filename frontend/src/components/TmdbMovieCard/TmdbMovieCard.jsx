@@ -51,7 +51,7 @@ const TmdbMovieCard = forwardRef(
         <img src={backdropUrl} alt={movieDetails.title} className="TmdbMovieCardImg" />
         <h1>{movieDetails.title}</h1>
         <div>
-          <AddWatchedEntry movieDetails={movieDetails} />
+          <AddWatchedEntry movieDetails={movieDetails} username={username} />
           <AddDiaryEntry movieDetails={movieDetails} username={username} />
         </div>
         <section>

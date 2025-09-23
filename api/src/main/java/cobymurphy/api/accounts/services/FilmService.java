@@ -28,4 +28,15 @@ public class FilmService {
                         HttpStatus.NOT_FOUND, "Film Id not found: " + id));
     }
 
+    public Film findByIdOrCreate(FilmDto filmDto) {
+        return filmDao.findById(filmDto.getId())
+                .orElseGet(() -> addFilm(filmDto));
+    }
+
+
+    public Film addFilm(FilmDto filmDto) {
+        Film film = filmDto.convertToFIlm();
+        return filmDao.save(film);
+    }
+
 }

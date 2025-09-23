@@ -1,10 +1,7 @@
 package cobymurphy.api.accounts.controller;
 
 import cobymurphy.api.accounts.dto.*;
-import cobymurphy.api.accounts.model.DiaryEntry;
 import cobymurphy.api.accounts.model.Users;
-import cobymurphy.api.accounts.model.WatchedEntry;
-import cobymurphy.api.accounts.services.FilmService;
 import cobymurphy.api.accounts.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,9 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -28,101 +22,23 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    FilmService filmService;
-
     @GetMapping("/{username}")
     public ResponseEntity<ProfileDto> profile(@PathVariable String username) {
         return ResponseEntity.ok(userService.getProfileByUsername(username));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<ProfileDto>> searchUsers(@RequestParam String searchQuery,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size,
-        @RequestParam(defaultValue = "username") String sortBy,
-        @RequestParam(defaultValue = "ASC") String sortDirection) {
+    public ResponseEntity<Page<ProfileDto>> searchUsers(
+            @RequestParam String searchQuery,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "username") String sortBy,
+            @RequestParam(defaultValue = "ASC") String sortDirection) {
 
             Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<ProfileDto> users = userService.searchUsers(searchQuery, pageable);
             return ResponseEntity.ok(users);
-    }
-
-    /**
-     * Returns a List of films watched by the user
-     * @param username The username who's watched movies you want to receive
-     * @return Returns a list of Films watched by the username
-     */
-    @GetMapping("/{username}/films")
-    public ResponseEntity<List<WatchedEntry>> getWatchedFilms(@PathVariable String username) {
-        return ResponseEntity.ok(userService.findAllWatchedEntryByUsername(username));
-    }
-
-    // TODO : Use pagination
-    @GetMapping("/{username}/diary")
-    public ResponseEntity<List<DiaryFilmDto>> getUserDiary(@PathVariable String username) {
-
-        List<DiaryEntry> diaryEntries= userService.findAllDiaryEntryByUsername(username);
-
-        List<DiaryFilmDto> dfDto = diaryEntries.stream()
-                .filter(entry -> entry.getFilm() != null)
-                .map(entry -> new DiaryFilmDto(
-                        entry.convertToDto(),
-                        filmService.findFilmById(entry.getFilm().getId())
-                ))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(dfDto);
-    }
-
-    @PostMapping("/{username}/diary")
-    public ResponseEntity<DiaryDto> createDiaryEntry(@RequestBody DiaryFilmDto diaryFilmDto,
-                                                       UriComponentsBuilder ucb,
-                                                       Principal principal) {
-
-        String username = principal.getName();
-        DiaryEntry entry = userService.addDiaryEntry(username, diaryFilmDto.getDiaryDto(), diaryFilmDto.getFilmDto());
-        DiaryDto diaryDto = entry.convertToDto();
-
-        URI location = ucb
-                .path("users/{username}/diary")
-                .buildAndExpand(username)
-                .toUri();
-
-        return ResponseEntity.created(location).body(diaryDto);
-    }
-
-    // TODO : implement userReview
-    @GetMapping("/{username}/reviews")
-    public String getUserReview(@PathVariable String username) {
-        return "reviews.";
-    }
-
-    /**
-     * Adds a watched entry to a users account
-     *
-     * @param watchedFilmDto   A watchedDto and FilmDto
-     * @param principal The authenticated user making the request
-     * @param ucb       Used to construct the URI of the newly created watched entry
-     * @return          A 201 created response with the location header to the new resource
-     */
-    @PostMapping("/{username}/watched/")
-    public ResponseEntity<WatchedDto> updateWatchedEntry(@RequestBody WatchedFilmDto watchedFilmDto,
-                                                         Principal principal,
-                                                         UriComponentsBuilder ucb) {
-
-        String username = principal.getName();
-        WatchedEntry entry = userService.updateWatchedEntry(username, watchedFilmDto.getFilm(), watchedFilmDto.getWatched());
-
-        WatchedDto watchedDto = entry.convertToDto();
-
-        URI location = ucb
-                .path("users/{username}/watched")
-                .buildAndExpand(username)
-                .toUri();
-
-        return ResponseEntity.created(location).body(watchedDto);
     }
 
     @PostMapping("/{username}/follow")
@@ -141,9 +57,8 @@ public class UserController {
     @PostMapping("/{username}/unfollow")
     public ResponseEntity<ProfileDto> unfollowUser(@PathVariable String username, Principal principal, UriComponentsBuilder ucb) {
 
-        Users unfollowedUser = userService.followUser(principal.getName(), username);
+        Users unfollowedUser = userService.unfollowUser(principal.getName(), username);
         ProfileDto unfollowedUserDto = unfollowedUser.convertToProfileDTO();
-
 
         URI location = ucb
                 .path("users/{username}/unfollow")
@@ -153,21 +68,3 @@ public class UserController {
         return ResponseEntity.created(location).body(unfollowedUserDto);
     }
 }
-
-
-
-//    // FIXME: currently just retrieves the movie title,
-//    /**
-//     * If authenticated it shows watchedEntry details
-//     * as well as the latest review of the {username},
-//     * otherwise shows the latest review of the {username} if one exists
-//     *
-//     * @param username The username of the users review you want
-//     * @param title Film title of the review you want
-//     * @return FilmDTO
-//     */
-//    @GetMapping("/film/{title}")
-//    public ResponseEntity<FilmDto> getLastFilmReview(@PathVariable String username, @PathVariable String title) {
-//
-//        return ResponseEntity.ok(filmService.findFilmByTitle(title));
-//    }

@@ -1,6 +1,8 @@
 import "./Films.css";
 
 import { useEffect, useState } from "react";
+
+import CarouselPoster from "../CarouselPoster/CarouselPoster";
 function Films({ setSelectedMovieId, username }) {
   const [films, setFilms] = useState([]);
 
@@ -28,22 +30,20 @@ function Films({ setSelectedMovieId, username }) {
   return (
     <section className="Films">
       <h1>Films</h1>
-      <ul className="UserFilmList">
+      <div className="UserFilmList">
         {films && films.length > 0 ? (
           films.map((item) => (
-            <li
+            <CarouselPoster
               key={item.watched_id}
+              item={item.film}
               className={"UserFilmListItem"}
               onClick={() => setSelectedMovieId(item.film.id)}
-            >
-            <img src={`https://image.tmdb.org/t/p/w185/${item.film.poster_path}`}/>
-            <p>{item.film.title}</p>
-            </li>
+            />
           ))
         ) : (
           <></>
         )}
-      </ul>
+      </div>
     </section>
   );
 }

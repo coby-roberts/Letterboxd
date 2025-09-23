@@ -11,6 +11,8 @@ import cobymurphy.api.accounts.model.WatchedEntry;
 import cobymurphy.api.accounts.repository.FilmDao;
 import cobymurphy.api.accounts.repository.UserDao;
 import cobymurphy.api.accounts.model.Film;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,26 +20,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
-    private final UserDao userDao;
-    private final FilmDao filmDao;
-    private final WatchedDao watchedDao;
-    private final DiaryDao diaryDao;
+    @Autowired
+    UserDao userDao;
 
-    public UserService(UserDao userDao,
-                       FilmDao filmDao,
-                       WatchedDao watchedRepository,
-                       DiaryDao diaryDao,
-                       JwtService jwtService,
-                       AuthenticationManager authenticationManager) {
-
-        this.userDao = userDao;
-        this.filmDao = filmDao;
-        this.watchedDao = watchedRepository;
-        this.diaryDao = diaryDao;
+    public Users findByUsername(String username) {
+        return userDao.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
     }
 
     public SettingsDto settings(String username) {
@@ -50,81 +43,6 @@ public class UserService {
         return userDao.findByUsername(username)
                 .map(Users::convertToProfileDTO)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-    }
-
-    // TODO: create a watchedDto to return instead of this.
-    /**
-     * @param username of the user whose films you want to retrieve
-     * @return a list of the users watched films
-     *
-     */
-    public List<WatchedEntry> findAllWatchedEntryByUsername(String username) {
-
-        return watchedDao.findByUser_Username(username);
-    }
-    public List<WatchedEntry> findAllWatchedEntryByUsername(Long id) {
-        return watchedDao.findByUser_Id(id);
-    }
-
-    // TODO: create a diaryDto to return instead of this.
-    /**
-     * @param username of the user whose films you want to retrieve
-     * @return a list of the users watched films
-     */
-    public List<DiaryEntry> findAllDiaryEntryByUsername(String username) {
-        return diaryDao.findByUser_Username(username);
-    }
-
-    public DiaryEntry addDiaryEntry(String username, DiaryDto diaryDto, FilmDto filmDto) {
-
-        Users user = userDao.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-
-        Film film = filmDao.findById(filmDto.getId())
-                .orElseGet(() -> addFilm(filmDto));
-
-        WatchedEntry watchedEntry = watchedDao.findByUserAndFilm(user, film)
-                .orElse(new WatchedEntry(user, film, diaryDto.getRating()));
-        watchedEntry.setRating(diaryDto.getRating());
-        watchedDao.save(watchedEntry);
-
-        DiaryEntry diaryEntry = new DiaryEntry();
-        diaryEntry.setUser(user);
-        diaryEntry.setFilm(film);
-        diaryEntry.setWatchDate(diaryDto.getWatchDate());
-
-        if (diaryDto.getReview() != null) {
-            diaryEntry.setReview(diaryDto.getReview());
-        }
-        if (diaryDto.getRating() > 0) {
-            diaryEntry.setRating(diaryDto.getRating());
-        }
-
-        return diaryDao.save(diaryEntry);
-    }
-
-    /**
-     * Adds a film to a users watched list
-     *
-     * @param username The authenticated user making the request
-     * @param filmDto   DTO containing details of the film and user rating
-     */
-    public WatchedEntry updateWatchedEntry(String username, FilmDto filmDto, WatchedDto watchedDto) {
-
-        Users user = userDao.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-
-        Film film = filmDao.findById(filmDto.getId())
-                    .orElseGet(() -> addFilm(filmDto));
-
-        WatchedEntry entry = new WatchedEntry(user, film, watchedDto.getRating());
-
-        return watchedDao.save(entry);
-    }
-
-    public Film addFilm(FilmDto filmDto) {
-        Film film = filmDto.convertToFIlm();
-        return filmDao.save(film);
     }
 
     public SettingsDto patchAccount(String username, SettingsDto request) {

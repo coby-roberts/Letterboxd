@@ -15,6 +15,8 @@ public interface WatchedDao extends JpaRepository<WatchedEntry, Long> {
 
     List<WatchedEntry> findByUser_Username(String username);
     List<WatchedEntry> findByUser_Id(Long id);
+
+    Optional<WatchedEntry> findByFilm_id(Long id);
     Optional<WatchedEntry> findByUserAndFilm(Users user, Film film);
 
 }
