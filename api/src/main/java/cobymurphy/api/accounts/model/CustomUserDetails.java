@@ -3,7 +3,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 
-// Also called UserPrincipal
 public class CustomUserDetails implements UserDetails {
 
     final private Users user;
@@ -15,6 +14,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    public Long getId() {
+        return user.getId();
     }
 
     @Override

@@ -1,0 +1,51 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Colours */
+  --colour-primary: #000000;
+  --colour-secondary: #aaaaaa;
+  --colour-background: var(--colour-primary);
+  --colour-border: #aaaaaa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x:auto;
+  scrollbar-width: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  min-width: 300px;
+  min-height: 400px;
+  height: 100%;
+  background-color: var(--colour-background);
+  color: var(--colour-secondary);
+}
+
+h1, h2, h3, h4 {
+  font-family: "Roboto Mono", monospace;
+
+}
+
+p {
+  font-family: "Roboto Mono", monospace;
+  font-size: 12px;
+}
+
+label {
+  text-transform: uppercase;
+  font-size: 12px;
+}

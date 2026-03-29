@@ -1,0 +1,22 @@
+.FilmSearchCard {
+}
+
+.FilmSearchCard {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.FilmSearchCardPoster {
+  width: 100px;
+}
+
+.FilmSearchCardPoster img {
+  width: 100%;
+}
+
+.FilmSearchCard p {
+  margin-top: 1px;
+  margin-bottom: 2px;
+}
+
+

@@ -1,0 +1,25 @@
+.FilmInfo {
+  /* TODO: Add FilmInfo styles here */
+}
+
+.FilmRating {
+  display: flex;
+  justify-content: space-around;
+}
+
+.FilmInfoPoster img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.InfoCircle {
+  border: 1px solid white;
+  padding: 0px 5px;
+  border-radius: 12px;
+}
+
+#film-title {
+  font-size: 1rem;
+  font-weight: 900;
+}

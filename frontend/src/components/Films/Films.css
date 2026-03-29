@@ -1,6 +1,6 @@
-.Films {
+/* .Films {
 
-}
+} */
 
 .UserFilmList {
   display: grid;
@@ -12,8 +12,4 @@
   width: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
-}
-
-.UserFilmListItem {
-
 }

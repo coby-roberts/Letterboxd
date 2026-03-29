@@ -1,0 +1,7 @@
+.Footer {
+  width: 100%;
+  height: 500px;
+  margin-top: auto;
+  background-color: var(--colour-background);
+  border-top: 1px solid #858585;
+}

@@ -36,7 +36,6 @@ function Films({ setSelectedMovieId, username }) {
             <CarouselPoster
               key={item.watched_id}
               item={item.film}
-              className={"UserFilmListItem"}
               onClick={() => setSelectedMovieId(item.film.id)}
             />
           ))

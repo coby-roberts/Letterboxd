@@ -1,0 +1,14 @@
+.UserFilmToolbar {
+  border: 1px solid var(--colour-border);
+  padding: 0;
+  margin: 20px;
+  display: flex;
+}
+
+.ToolBarIcon {
+
+}
+
+.ToolBarIcon:hover {
+  
+}

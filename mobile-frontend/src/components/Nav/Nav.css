@@ -1,0 +1,43 @@
+.Nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: fit-content;
+  /* clamp(100px, 200px, 300px); */
+
+  border: 0.5px solid white;
+  border-radius: 40px;
+
+  background: rgba(255, 255, 255, 0.2); /* translucent but NOT affecting children */
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+
+  padding: 2px;
+
+  z-index: 100;
+}
+
+.Nav a {
+  color: black;
+  padding: 10px 20px;
+  border-radius: 28px;
+}
+
+.Nav a.active,
+.Nav a:hover {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  color: white;
+}
+
+.Nav svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 1.8;
+}

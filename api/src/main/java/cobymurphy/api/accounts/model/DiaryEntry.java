@@ -34,12 +34,6 @@ public class DiaryEntry {
     private Integer rating;
     private String review;
 
-//    public DiaryEntry(Users user, Film film, LocalDate watchDate) {
-//        this.user = user;
-//        this.film = film;
-//        this.
-//    }
-
     public DiaryDto convertToDto() {
         return new DiaryDto(
                 this.getEntry_id(),

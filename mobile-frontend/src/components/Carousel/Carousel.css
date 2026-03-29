@@ -1,0 +1,34 @@
+.Carousel {
+}
+
+.carousel-heading {
+}
+
+.carousel-heading h1 {
+}
+
+.carousel-heading button {
+}
+
+.posters {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 1rem;
+  scrollbar-width: none;
+}
+
+.SkeletonCard {
+  flex-shrink: 0;
+  width: 123px;   /* matches w185 posters at typical aspect ratio */
+  height: 185px;
+  border-radius: var(--radius);
+  background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

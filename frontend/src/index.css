@@ -29,7 +29,7 @@ html {
 }
 
 body {
-  background-image: url('../public/Screenshot\ 2025-09-21\ at\ 2.29.31\ pm.png');
+  background-image: url('/Screenshot\ 2025-09-21\ at\ 2.29.31\ pm.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
